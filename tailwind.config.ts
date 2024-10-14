@@ -12,6 +12,13 @@ const config: Config = {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
+      keyframes: {
+        'big-bounce': {
+          '0%, 100%':  { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-2.5rem)' }
+
+        }
+      }
     },
   },
   plugins: [],

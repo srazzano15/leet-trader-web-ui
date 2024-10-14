@@ -1,0 +1,35 @@
+{
+    "results": [ 
+        {
+            "ticker": "PLTR",
+            "price": 43.19,
+            "change": 0.73
+        },
+        {
+            "ticker": "AFRM",
+            "price": 41.19,
+            "change": -0.73
+        },
+        {
+            "ticker": "SPY",
+            "price": 543.19,
+            "change": 3.73
+        },
+        {
+            "ticker": "TLRY",
+            "price": 1.99,
+            "change": -0.02
+        },
+        {
+            "ticker": "SNOW",
+            "price": 118.24,
+            "change": -2.25
+        },
+        {
+            "ticker": "DDOG",
+            "price": 201.52,
+            "change": -20.24
+        }
+        
+    ]    
+}
