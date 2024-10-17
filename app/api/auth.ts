@@ -35,6 +35,7 @@ export const loginUser = async (data: LoginData): Promise<LoginResponse | void> 
   
       // Store tokens in localStorage
       setTokens(responseData.access, responseData.refresh)
+      return responseData
   } catch (error) {
     console.error('Login Failed:', error);
   }

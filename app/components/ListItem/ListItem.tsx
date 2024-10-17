@@ -22,7 +22,7 @@ const ListItem: React.FC<ListItemProps> = ({
       {!children && (
         <div className="text-right">
           <span className={`block ${headerClass}`}>${props.rightHeader}</span>
-          <span className="block text-xs text-emerald-500">{`${props.subRight} (0.59%)`}</span>
+          <span className={`block text-xs ${props.hasGained ? 'text-emerald-500' : 'text-red-500'}`}>{`${props.subRight}`}</span>
         </div>
       )}
     </li>

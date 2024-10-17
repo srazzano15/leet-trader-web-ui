@@ -1,12 +1,8 @@
 import { WatchlistProps } from '../types/watchlist';
-import { refreshAccessToken } from './session';
-  // Change to your backend URL
+import { makeAuthenticatedRequest } from './session';
 
-
-
-export const fetchWatchlists = async (token: string): Promise<WatchlistProps[]> => {
-  await refreshAccessToken()
-  const res = await fetch(`${process.env.API_URL}/watchlists/`, {
+export const fetchWatchlists = async (): Promise<WatchlistProps[]> => {
+  /* const res = await fetch(`${process.env.API_URL}/watchlists/`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -16,7 +12,8 @@ export const fetchWatchlists = async (token: string): Promise<WatchlistProps[]> 
     throw new Error('Failed to fetch watchlists');
   }
 
-  return res.json();
+  return res.json(); */
+  return makeAuthenticatedRequest('/watchlists/', {method: 'GET'})
 };
 
 export const createWatchlist = async (name: string, token: string): Promise<WatchlistProps> => {
@@ -26,7 +23,7 @@ export const createWatchlist = async (name: string, token: string): Promise<Watc
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({ name, assets: [] }),  // Send only the name for creation
+      body: JSON.stringify({ name }), 
     });
   
     if (!res.ok) {

@@ -5,10 +5,12 @@ import LineChart from "../components/LineChart/LineChart";
 import { ChartData } from "chart.js";
 import Watchlist from "../ui/Watchlist";
 import { PositionPanel } from "../ui/PositionPanel";
-import { validateAccessToken, refreshAccessToken } from "../api/session";
+import { validateRefreshToken, refreshAccessToken } from "../api/session";
 import { useRouter } from 'next/navigation';
+import LoadingAnimation from "../components/LoadingAnimation";
 
 const Home: React.FC = () => {
+  const [isLoading, setIsLoading] = useState<boolean>(true)
   const [chartData, setChartData] = useState<ChartData<"line">>({
     labels: [
       "January",
@@ -39,20 +41,23 @@ const Home: React.FC = () => {
   const router = useRouter()
 
   useEffect(() => {
-    refreshAccessToken();
-    
-    try {
-        validateAccessToken()
-    } catch (error) {
-        router.replace('/login')
+
+    if (!validateRefreshToken()) {
+      router.push('/login')
+    } else {
+      setIsLoading(false)
     }
   }, [router]);
+
+  if (isLoading) {
+    return <div className="mt-20"><LoadingAnimation /> </div>
+  } else {
 
   return (
     <div className="grid grid-cols-5 lg:gap-5 max-h-[90vh] overflow-y-auto">
       {/*-- Watchlist --*/}
 
-      <Watchlist className="hidden lg:block" />
+      <Watchlist />
 
       <main className="col-span-5 lg:col-span-4 mx-5 lg:mx-0">
         {/*-- Main Body --*/}
@@ -92,5 +97,6 @@ const Home: React.FC = () => {
       </main>
     </div>
   );
+}
 };
 export default Home;

@@ -5,34 +5,35 @@ import { addAssetsToWatchlist } from "@/app/api/watchlist";
 import { refreshAccessToken } from "@/app/api/session";
 
 interface TicketSearchProps {
-    listId: number
+  assetHandler: any;
 }
 
-const TickerSearch: React.FC<TicketSearchProps>= ({listId}) => {
+const TickerSearch: React.FC<TicketSearchProps> = ({ assetHandler }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [query, setQuery] = useState<string>("");
   const [searchResults, setSearchResults] = useState<any[]>([]);
   const [error, setError] = useState<string | null>(null);
-  let [assetItem, setAssetItem] = useState<[{name: string; symbol: string; type: 'stock' | 'crypto'}]>([{
-    name: "",
-    symbol: "",
-    type: 'stock'
-  }]);
+  let [assetItem, setAssetItem] = useState<
+    [{ name: string; symbol: string; type: "stock" | "crypto" }]
+  >([
+    {
+      name: "",
+      symbol: "",
+      type: "stock",
+    },
+  ]);
 
+  // add debounce to search so we dont rate limit the Polygon API
   const [debounceTimeout, setDebounceTimeout] = useState<number | undefined>();
 
   const handleAddAsset = async (newName: string, newSymbol: string) => {
-    setAssetItem([{
-        name: newName,
-        symbol: newSymbol,
-        type: 'stock'
-    }])
-    const accessToken = await refreshAccessToken()
-    try {
-        const response = await addAssetsToWatchlist(listId, assetItem, accessToken)
-        const resData = await response.json()
-    }
-  }
+    assetHandler({
+      name: newName,
+      symbol: newSymbol,
+      type: "stock",
+    });
+    setQuery('')
+  };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setIsLoading(true);
@@ -68,16 +69,18 @@ const TickerSearch: React.FC<TicketSearchProps>= ({listId}) => {
       setIsLoading(false);
     }
   };
+
   const resultsList = searchResults.map((result, index) => (
     <li
       key={index}
       className="cursor-pointer p-3 border-t items-center flex hover:bg-gradient-to-r from-white to-emerald-300"
-      onClick={(e) => console.log(e)}
+      onClick={() => handleAddAsset(result.name, result.ticker)}
     >
       <h6 className="mr-3 basis-12">{result.ticker}</h6>
       <span className="text-xs text-gray-400 flex-1">{result.name}</span>
     </li>
   ));
+
   return (
     <>
       <input
