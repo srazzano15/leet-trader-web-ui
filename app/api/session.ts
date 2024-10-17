@@ -2,8 +2,6 @@ import * as jose from "jose";
 import moment from "moment";
 
 const AUTH_URL = `${process.env.API_URL}/auth`;
-const DEVELOPMENT_SECRET_KEY =
-  "django-insecure-e+f@1l(fs+f#@pj#cf(8cw^8ui41cv+xkd_c*o8_$^^lo7%vgg";
 
 /**
  * Helper functions for managing session
