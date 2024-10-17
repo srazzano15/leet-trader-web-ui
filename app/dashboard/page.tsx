@@ -1,14 +1,12 @@
 "use client";
-import Card from "./components/Card";
-import { useState } from "react";
-import LineChart from "./components/LineChart/LineChart";
+
+import { useState, useEffect } from "react";
+import LineChart from "../components/LineChart/LineChart";
 import { ChartData } from "chart.js";
-import Watchlist from "./ui/Watchlist";
-import ListItem from "./components/ListItem/ListItem";
-import LoadingAnimation from "./components/LoadingAnimation";
-import { PositionPanel } from "./ui/PositionPanel";
-import { ListItemProps } from "./components/ListItem/types";
-import jose from 'jose'
+import Watchlist from "../ui/Watchlist";
+import { PositionPanel } from "../ui/PositionPanel";
+import { validateAccessToken, refreshAccessToken } from "../api/session";
+import { useRouter } from 'next/navigation';
 
 const Home: React.FC = () => {
   const [chartData, setChartData] = useState<ChartData<"line">>({
@@ -28,7 +26,7 @@ const Home: React.FC = () => {
     ],
     datasets: [
       {
-        label: '',
+        label: "",
         data: [100, 82, 16, 22, 65, 120, 200, 500, -25, -200, -98, -16],
         borderColor: "rgba(75, 192, 192, 1)",
         backgroundColor: "rgba(75, 192, 192, 0.2)",
@@ -38,8 +36,20 @@ const Home: React.FC = () => {
     ],
   });
 
+  const router = useRouter()
+
+  useEffect(() => {
+    refreshAccessToken();
+    
+    try {
+        validateAccessToken()
+    } catch (error) {
+        router.replace('/login')
+    }
+  }, [router]);
+
   return (
-    <div className="grid grid-cols-5 lg:gap-5 overflow-y-auto">
+    <div className="grid grid-cols-5 lg:gap-5 max-h-[90vh] overflow-y-auto">
       {/*-- Watchlist --*/}
 
       <Watchlist className="hidden lg:block" />

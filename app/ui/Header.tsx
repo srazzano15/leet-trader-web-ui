@@ -8,7 +8,7 @@ const Header = () => {
             <div className="grid grid-cols-3 justify-center">
                 <span className="text-xl col-start-1 md:col-start-2 md:justify-self-center">Stock Trader</span>
                 <button 
-                    className="col-start-3 justify-self-end mr-1"
+                    className="col-start-3 justify-self-end mr-5"
                     onClick={() => setNavOpen(!navOpen)}
                 >Menu</button>
             </div>

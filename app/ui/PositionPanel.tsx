@@ -2,6 +2,7 @@ import ListItem from "../components/ListItem/ListItem";
 import LineChart from "../components/LineChart/LineChart";
 import { ReactNode } from "react";
 import { ListItemProps } from "../components/ListItem/types";
+import moment from "moment";
 
 type PositionPanelProps = {
   children?: ReactNode;
@@ -21,6 +22,23 @@ export const PositionPanel: React.FC<PositionPanelProps> = ({
 }) => {
   const buttonClasses =
     "mr-3 py-1 border-b-2 border-transparent hover:border-emerald-600 cursor-pointer";
+
+  
+  const marketStatus = (): string => {
+    const easternTime = moment().utcOffset(-4)
+    if ([6, 7].includes(easternTime.isoWeekday())) {
+      return 'Closed'
+    } else if (easternTime.isBefore(moment('09:30:00'))) {
+      return 'Pre-Market'
+    } else if (easternTime.isAfter(moment('16:00:00'))) {
+      return 'Post-Market'
+    } else {
+      return 'Open'
+    }
+  }
+
+
+
   return (
     <div className=" col-span-5 grid grid-rows-6 grid-cols-7 grid-flow-col-dense pt-3 pr-2">
       {/*-- ListItem --*/}
@@ -67,8 +85,8 @@ export const PositionPanel: React.FC<PositionPanelProps> = ({
           </div>
 
           <div className="col-span-1">
-            <div className="text-sm text-gray-400">Market</div>
-            <div className="font-semibold">Closed</div>
+            <div className="text-sm text-gray-400">Market Status</div>
+            <div className="font-semibold">{marketStatus()}</div>
           </div>
 
           <h4 className="text-xl font-semibold col-span-2 border-b-2 border-b-gray-400 self-end mt-4">
