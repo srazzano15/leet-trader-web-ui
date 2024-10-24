@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import ListItem from "../components/ListItem/ListItem";
 import WatchListPicker from "../components/WatchListPicker/WatchListPicker";
 import Modal from "../components/Modal/Modal";
@@ -31,19 +31,19 @@ const Watchlist: React.FC<WatchlistProps> = () => {
 
   const parseGainLoss = (currentPrice: number, prevClose: number) => {
     if (currentPrice > prevClose) {
-      // divide current price by prevclose and * 100 then -1
-      const gainPercentage = (currentPrice / prevClose - 1) * 100;
-      const output = `+${(currentPrice - prevClose).toFixed(
-        2
-      )} (+${gainPercentage.toFixed(2)}%)`;
+      const gainAmount = (currentPrice - prevClose).toFixed(2)
+      // Calculate the gain percentage, ensure precise rounding
+      const gainPercentage = ((currentPrice / prevClose - 1) * 100).toFixed(2);
+  
+      // Calculate the gain and ensure 2 decimal places
+      const output = `+${(currentPrice - prevClose).toFixed(2)} (+${gainPercentage}%)`;
       return output;
     } else {
-      // divide current price / prev close multiply by 100, then subtract from 100
-      const lossPercentage = -1 * (100 - 100 * (currentPrice / prevClose));
-
-      const output = `${(currentPrice - prevClose).toFixed(
-        2
-      )} (${lossPercentage.toFixed(2)}%)`;
+      // Calculate the loss percentage, ensure precise rounding
+      const lossPercentage = (100 * (currentPrice / prevClose) - 100).toFixed(2);
+  
+      // Calculate the loss and ensure 2 decimal places
+      const output = `${(currentPrice - prevClose).toFixed(2)} (${lossPercentage}%)`;
       return output;
     }
   };
@@ -153,7 +153,7 @@ const Watchlist: React.FC<WatchlistProps> = () => {
           leftHeader: stock.symbol,
           subLeft: stock.name,
           rightHeader: stock.symbol
-            ? prices[stock.symbol]?.latestTrade?.p
+            ? prices[stock.symbol]?.latestTrade?.p.toFixed(2)
             : "---",
           subRight: stock.symbol
             ? parseGainLoss(

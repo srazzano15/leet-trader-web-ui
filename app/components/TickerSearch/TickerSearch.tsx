@@ -5,7 +5,7 @@ import { addAssetsToWatchlist } from "@/app/api/watchlist";
 import { refreshAccessToken } from "@/app/api/session";
 
 interface TicketSearchProps {
-  assetHandler: any;
+  assetHandler?: any;
 }
 
 const TickerSearch: React.FC<TicketSearchProps> = ({ assetHandler }) => {
@@ -86,7 +86,7 @@ const TickerSearch: React.FC<TicketSearchProps> = ({ assetHandler }) => {
       <input
         type="text"
         placeholder="Search for ticker..."
-        className="border mb-4 p-2 rounded-md"
+        className="border mb-4 p-2 min-w- rounded-md"
         value={query}
         onChange={handleInputChange}
       />

@@ -1,16 +1,16 @@
 export interface WatchlistProps {
-    id?: number;
+  id?: number;
+  name?: string;
+  assets?: Array<{
+    symbol?: string;
     name?: string;
-    assets?: Array<{
-      symbol?: string;
-      name?: string
-      type?: 'stock' | 'crypto'
-    }>;
-    created_at?: string;
-  }
+    type?: "stock" | "crypto";
+  }>;
+  created_at?: string;
+}
 
-  export interface WatchlistAssetProps {
-    symbol: string;
-    name: string
-    type: 'stock' | 'crypto'
-  }
+export interface WatchlistAssetProps {
+  symbol: string;
+  name: string;
+  type: "stock" | "crypto";
+}

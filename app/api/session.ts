@@ -44,7 +44,7 @@ const refreshAccessToken = async (): Promise<string | null> => {
 const validateAccessToken = (): boolean | Error => {
   const { accessToken } = getTokens();
   if (!accessToken || accessToken == "undefined") {
-    throw new Error("No access token found");
+    return false
   }
   const decodedToken = jose.decodeJwt(accessToken);
   const tokenExpiration = <number>decodedToken.exp * 1000;

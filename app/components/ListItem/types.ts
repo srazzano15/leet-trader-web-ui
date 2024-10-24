@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 
 interface Props {
-  leftHeader: string | undefined;
+  leftHeader?: string | undefined;
   rightHeader?: number | string;
   subRight?: number | string;
   subLeft?: number | string;
@@ -11,6 +11,6 @@ interface Props {
 export interface ListItemProps {
   props: Props
   className?: string;
-  headerClass?: string;
+  headerClass?: string | '';
   children?: ReactNode;
 }

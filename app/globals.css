@@ -50,3 +50,20 @@ main {
   from { transform: 'translateY(0)' };
   to { transform: 'translateY(-2.5rem)' };
 }*/
+
+.dropdown-menu {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  position: absolute;
+  z-index: 10;
+}
+.dropdown-menu > div:last-child {
+  border-bottom-right-radius: 0.5rem; /* 8px */
+  border-bottom-left-radius: 0.5rem; /* 8px */
+}
+.dropdown-menu > div:first-child {
+  border-top-right-radius: 0.5rem; /* 8px */
+  border-top-left-radius: 0.5rem; /* 8px */
+}

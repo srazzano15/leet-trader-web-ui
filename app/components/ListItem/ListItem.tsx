@@ -4,7 +4,7 @@ import { ListItemProps } from "./types";
 
 const ListItem: React.FC<ListItemProps> = ({
   className,
-  headerClass,
+  headerClass = '',
   children,
   props
 }) => {
@@ -21,8 +21,8 @@ const ListItem: React.FC<ListItemProps> = ({
       {children}
       {!children && (
         <div className="text-right">
-          <span className={`block ${headerClass}`}>${props.rightHeader}</span>
-          <span className={`block text-xs ${props.hasGained ? 'text-emerald-500' : 'text-red-500'}`}>{`${props.subRight}`}</span>
+          <span className={`block ${headerClass}`}>{props.rightHeader}</span>
+          <span className={`block text-xs ${props.hasGained ? 'text-emerald-500' : 'text-red-500'}`}>{`${props.subRight || ''}`}</span>
         </div>
       )}
     </li>
