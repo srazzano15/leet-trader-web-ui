@@ -25,12 +25,16 @@ import LoadingAnimation from "./components/LoadingAnimation";
 import SliderCard from "./components/Slider/SliderCard";
 import moment from "moment";
 import ListItemContainer from "./components/ListItem/ListItemContainer";
+import TopStories from "./ui/home/TopStories";
+import MegaCaps from "./ui/home/MegaCaps";
+import CandlestickChart from "./components/CandlestickChart/CandlestickChart";
 
 const HomePage: React.FC = () => {
   const [navOpen, setNavOpen] = useState<boolean>(false);
   const [activeNavItem, setActiveNavItem] = useState<string | null>("tools");
   const [currentMenuList, setCurrentMenuList] = useState<MenuList | {}>({});
   const [tickerData, setTickerData] = useState<any>(null);
+  //const [socketData, setSocketData] = useState<any>({})
   const { isLoading, setLoading } = useLoadingState();
 
   const navItems: Record<string, MenuList> = {
@@ -117,7 +121,7 @@ const HomePage: React.FC = () => {
 
   const handleRemoveActiveState = () => {
     setActiveNavItem(null);
-    setCurrentMenuList({})
+    setCurrentMenuList({});
   };
 
 
@@ -166,25 +170,27 @@ const HomePage: React.FC = () => {
       console.error("Error: ", error);
     }
   };
+
+
   useEffect(() => {
-    if (moment().hour() > 15) return;
+    /* if (moment().hour() > 15) return;
     const poll = setInterval(() => {
       getDefaultStockData();
     }, 5000);
-    return () => clearInterval(poll);
+    return () => clearInterval(poll); */
   }, []);
 
   useEffect(() => {
-    (async () => {
+/*     (async () => {
       setLoading(true);
       await getDefaultStockData();
       setLoading(false);
-    })();
+    })(); */
   }, []);
   return (
-    <div className="min-h-3/4 bg-black">
+    <div className="bg-gradient-to-b from-black to-gray-200">
       {/* Navbar */}
-      <header className="bg-blend-difference py-2 px-10 w-screen shadow-md md:shadow-sm sticky z-10 top-0">
+      <header className="bg-black py-2 px-10 w-screen shadow-md md:shadow-sm sticky z-10 top-0">
         <div className="grid grid-cols-5 justify-center">
           <a href="/" className="text-xl col-start-1">
             {/* <Image src={LogoSvg} width={0} height={50} alt="Leet Trader" style={{
@@ -237,7 +243,7 @@ const HomePage: React.FC = () => {
       </header>
 
       {/* Hero Section */}
-      <section className={`min-h-screen`}>
+      <section className={``}>
         <div className="container mx-auto text-center">
           <h2 className="text-6xl font-bold text-white pt-8 ">
             Welcome to Leet Trader
@@ -245,48 +251,55 @@ const HomePage: React.FC = () => {
           <p className="mt-4 text-2xl text-white">
             Every tool a trader needs to be Leet.
           </p>
-          <div className="mt-8 w-full">{/* <TickerSearch /> */}</div>
+          <div className="py-8"></div>
         </div>
       </section>
+      
+
+       {/* Market View */}
+       <section className="pt-8 bg-gray-200">
+        <div className="container mx-auto">
+          <CandlestickChart />
+        </div>
+      </section>
+
+
+      {/* Top Stories Section */}
+      <TopStories />
+
+     
+      
+
 
       <section className="py-10 bg-gray-200">
         <div className="container mx-auto">
           <div className="grid grid-flow-row auto-cols-auto grid-cols-2 gap-8 justify-even w-full">
+          <MegaCaps />
 
-          
-          <ListItemContainer
-            containerClasses=""
-            cols={2}
-            subText="See the most actively traded stonks"
-            header="Highest Volume Stonks"
-            items={stonks}
-          />
-          
-          <ListItemContainer
-            containerClasses=""
-            cols={2}
-            subText="See the most volatile stonks of the day"
-            header="Most Volatile"
-            items={stonks}
-          />
-          <ListItemContainer
-            containerClasses=""
-            cols={1}
-            subText="See the most volatile stonks of the day"
-            header="Winners"
-            items={tickerData?.tickers}
-          />
-          <ListItemContainer
-            containerClasses=""
-            cols={1}
-            subText="See the most volatile stonks of the day"
-            header="Losers"
-            items={ tickerData?.tickers.filter((ticker: any) => ( ticker.change < 0 ))}
-          />
+            <ListItemContainer
+              cols={2}
+              subText="See the most volatile stonks of the day"
+              header="Most Volatile"
+              items={stonks}
+            />
+            <ListItemContainer
+              cols={1}
+              subText="See the most volatile stonks of the day"
+              header="Gainers"
+              items={tickerData?.tickers}
+            />
+            <ListItemContainer
+              cols={1}
+              subText="See the most volatile stonks of the day"
+              header="Losers"
+              items={tickerData?.tickers.filter(
+                (ticker: any) => ticker.change < 0
+              )}
+            />
           </div>
         </div>
       </section>
-
+      
       {/* Trending Assets Section */}
       <section id="trending" className="py-12 bg-gray-200 max-w-[100vw]">
         <div className="container mx-auto">
@@ -294,7 +307,7 @@ const HomePage: React.FC = () => {
 
           <Slider>
             {tickerData?.tickers.map((item: any, index: any) => {
-              return <SliderCard index={index} props={item} />;
+              return <SliderCard key={index} props={item} />;
             })}
           </Slider>
         </div>
@@ -302,11 +315,7 @@ const HomePage: React.FC = () => {
       </section>
 
       {/* Footer */}
-      <footer className="bg-gray-400 text-white py-4">
-        <div className="container mx-auto text-center">
-          <p>&copy; 2024 StockTrader. All Rights Reserved.</p>
-        </div>
-      </footer>
+      
     </div>
   );
 };

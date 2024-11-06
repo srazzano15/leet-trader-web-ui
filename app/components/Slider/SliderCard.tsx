@@ -1,5 +1,6 @@
 import Pill from "../Pill/Pill";
 import Avatar from "../Avatar";
+import DynamicPrice from "../DynamicPrice/DynamicPrice";
 interface SliderCardProps {
   logo: string;
   symbol: string;
@@ -11,14 +12,14 @@ interface SliderCardProps {
 
 type SliderCard = {
   props: SliderCardProps;
-  index: any;
+
 };
 
-const SliderCard: React.FC<SliderCard> = ({ index, props }) => {
+const SliderCard: React.FC<SliderCard> = ({ props }) => {
   return (
     <div
       className="transition cursor-pointer min-h-32 min-w-60 bg-white rounded-lg shadow p-3 hover:bg-gray-300"
-      key={index}
+      key={props.symbol}
     >
       <div className={`flex-none`}>
         <div className="grid grid-flow-col snap-center items-center gap-y-11">
@@ -33,7 +34,9 @@ const SliderCard: React.FC<SliderCard> = ({ index, props }) => {
             </div>
           </div>
 
-          <div className="col-start-1 text-sm">${props.price.toFixed(2)}</div>
+          <div className="col-start-1 text-sm">
+            <DynamicPrice num={props.price} />
+          </div>
           <div className="col-start-2 justify-self-end">
             {props.change > 0 ? (
               <Pill color="green" text={`+${props.percent_change}%`}></Pill>

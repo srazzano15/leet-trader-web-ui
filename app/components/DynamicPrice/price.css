@@ -1,0 +1,26 @@
+@keyframes gained {
+    from {
+      color: green;
+    }
+    to {
+      color: black;
+    }
+  }
+  @keyframes lost {
+    from {
+      color: red;
+    }
+    to {
+      color: black;
+    }
+  }
+  .gained {
+    color: green;
+    animation-name: gained;
+    animation-duration: 2s;
+  }
+  .lost {
+    color: red;
+    animation-name: lost;
+    animation-duration: 2s;
+  }

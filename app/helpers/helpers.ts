@@ -20,3 +20,21 @@ export const toTitleCase = (value: string): string => {
   return capitalized.join("");
 };
 
+export const getDomain = (url: string): string | null => {
+  const match = url.match(/^(?:https?:\/\/)?(?:www\.)?([^\/]+)/i);
+  return match ? match[1] : null;
+};
+
+
+// Calculates gain or loss percentage with previous close and current price as params
+export const calculatePercentChange = (currentPrice: number, prevClose: number): number => {
+  if (currentPrice > prevClose) {
+
+    const gainPercentage = ((currentPrice / prevClose - 1) * 100).toFixed(2);
+    return parseFloat(gainPercentage);
+  } else {
+    const lossPercentage = (100 * (currentPrice / prevClose) - 100).toFixed(2);
+
+    return parseFloat(lossPercentage)
+  }
+};
