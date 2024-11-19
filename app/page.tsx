@@ -55,7 +55,7 @@ const HomePage: React.FC = () => {
         subHeader: "Stay up to date on everything happening in markets",
         subList: ["economic", "earnings", "dividends"],
       },
-      backtester: {
+      backtest: {
         icon: faClockRotateLeft,
         subHeader: "Backtest your next winning strategy",
         subList: [],
@@ -190,12 +190,9 @@ const HomePage: React.FC = () => {
   return (
     <div className="bg-gradient-to-b from-black to-gray-200">
       {/* Navbar */}
-      <header className="bg-black py-2 px-10 w-screen shadow-md md:shadow-sm sticky z-10 top-0">
+{/*       <header className="bg-black py-2 px-10 w-screen shadow-md md:shadow-sm sticky z-10 top-0">
         <div className="grid grid-cols-5 justify-center">
           <a href="/" className="text-xl col-start-1">
-            {/* <Image src={LogoSvg} width={0} height={50} alt="Leet Trader" style={{
-              stroke: "white"
-            }}/> */}
             <LogoSvg height={35} color="white" />
           </a>
 
@@ -240,7 +237,7 @@ const HomePage: React.FC = () => {
             <Button text="Get Started" variant="gradient" />
           </div>
         </div>
-      </header>
+      </header> */}
 
       {/* Hero Section */}
       <section className={``}>
@@ -258,8 +255,8 @@ const HomePage: React.FC = () => {
 
        {/* Market View */}
        <section className="pt-8 bg-gray-200">
-        <div className="container mx-auto">
-          <CandlestickChart />
+        <div className="container mx-auto bg-white">
+
         </div>
       </section>
 

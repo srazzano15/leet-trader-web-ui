@@ -2,7 +2,7 @@ import Link from "next/link";
 import { logoutUser } from "../api/auth";
 
 interface NavigationProps {
-  isOpen: boolean;
+  isOpen?: boolean;
   links: Array<{
     text: string;
     route: string;
